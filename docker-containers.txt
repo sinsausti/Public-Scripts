@@ -1,0 +1,47 @@
+$ docker run -dt --privileged --name mysql1 \
+--network home-network \
+--ip 192.168.11.11 \
+-e MYSQL_ROOT_PASSWORD=password \
+-h mysql1 \
+-p 5100:3306 \
+-p 5101:22 \
+-v /Users/username/Docker/mysql1/datadir:/var/lib/mysql \
+-v /Users/username/Docker/mysql1/sshkey:/root/.ssh \
+-v /Users/sinsausti/Docker/mysql1/confd:/etc/mysql/conf.d \
+mysql
+
+$ docker run -d --name wordpressdb \
+--network home-network \
+--ip 192.168.11.12 \
+-h wordpressdb \
+-p 5200:3306 \
+-p 5201:22 \
+-v /Users/username/Docker/wordpressdb/datadir:/var/lib/mysql \
+-v /Users/username/Docker/wordpressdb/sshkey:/root/.ssh \
+-e MYSQL_ROOT_PASSWORD=password \
+-e MYSQL_DATABASE=wordpressdb \
+-e MYSQL_USER=worduser \
+-e MYSQL_PASSWORD=wordpass \
+mysql
+
+$ docker run -d --name wordpress \
+--network home-network \
+--ip 192.168.11.13 \
+-h wordpress \
+-p 5300:80 \
+-p 5301:443 \
+-p 5302:22 \
+-v /Users/username/Docker/wordpress/html:/var/www/html \
+-v /Users/username/Docker/wordpress/sshkey:/root/.ssh \
+wordpress
+
+$ docker run -d --name mariadb1 \
+--network home-network \
+--ip 192.168.11.14 \
+-h mariadb1 \
+-p 5400:22 \
+-p 5401:3306 \
+-v /Users/username/Docker/mariadb1/datadir:/var/lib/mysql \
+-v /Users/username/Docker/mariadb1/sshkey:/root/.ssh \
+-e MARIADB_ROOT_PASSWORD=password \
+mariadb
